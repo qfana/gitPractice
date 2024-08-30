@@ -11,3 +11,5 @@ function checkOnline(arr) {
     return arr.online;
   });
 }
+
+let test = '2221';
