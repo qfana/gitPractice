@@ -5,3 +5,9 @@ let users = [
     name: 'chavod', age: 16, online: false, dateReg: 30.08
   }
 ];
+
+function checkOnline(arr) {
+  arr.map(() => {
+    return arr.online;
+  });
+}
