@@ -1,6 +1,7 @@
 const http = require('http');
 const EventEmitter = require('events');
 const path = require('path');
+const bodyParse = require('./bodyParse');
 
 
 module.exports = class Application {
@@ -21,14 +22,18 @@ module.exports = class Application {
 
   addRouter(router) {
     Object.keys(router.endpoints).forEach(path => {
+
       const endpoint = router.endpoints[path];
       Object.keys(endpoint).forEach(method => {
+
         this.emitter.on(this._getRouteMask(path, method), (req, res) => {
           const handler = endpoint[method];
           this.middlewares.forEach(middleware => middleware(req, res));
           handler(req, res);
         });
+
       });
+
     });
   }
 
@@ -41,13 +46,13 @@ module.exports = class Application {
       });
 
       req.on('end', () => {
-        if (body) {
-          req.body = JSON.parse(body);
-        }
         const emited = this.emitter.emit(this._getRouteMask(req.url, req.method), req, res);
         if (!emited) {
           res.end();
         }
+        if (body) {
+          req.body = JSON.parse(body);
+        };
       });
     });
   }
