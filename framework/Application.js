@@ -1,7 +1,6 @@
 const http = require('http');
 const EventEmitter = require('events');
 const path = require('path');
-const bodyParse = require('./bodyParse');
 
 
 module.exports = class Application {
